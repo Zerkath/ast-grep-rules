@@ -1,0 +1,21 @@
+id: try-except-in-business-logic
+valid:
+  - |
+    try:
+        do_work()
+    finally:
+        cleanup()
+  - |
+    do_work()
+invalid:
+  - |
+    try:
+        do_work()
+    except Exception:
+        return None
+  - |
+    try:
+        do_work()
+    except ValueError as e:
+        log.error("oops", e)
+        return None

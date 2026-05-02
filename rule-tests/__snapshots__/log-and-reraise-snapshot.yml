@@ -1,0 +1,92 @@
+id: log-and-reraise
+snapshots:
+  ? |
+    try:
+        do_work()
+    except Exception as e:
+        log.error("work failed", e)
+        raise
+  : labels:
+    - source: |-
+        except Exception as e:
+            log.error("work failed", e)
+            raise
+      style: primary
+      start: 19
+      end: 83
+    - source: raise
+      style: secondary
+      start: 78
+      end: 83
+    - source: error
+      style: secondary
+      start: 50
+      end: 55
+    - source: log.error
+      style: secondary
+      start: 46
+      end: 55
+    - source: log.error("work failed", e)
+      style: secondary
+      start: 46
+      end: 73
+  ? |
+    try:
+        do_work()
+    except Exception as e:
+        self.logger.error("nope", e)
+        raise
+  : labels:
+    - source: |-
+        except Exception as e:
+            self.logger.error("nope", e)
+            raise
+      style: primary
+      start: 19
+      end: 84
+    - source: raise
+      style: secondary
+      start: 79
+      end: 84
+    - source: error
+      style: secondary
+      start: 58
+      end: 63
+    - source: self.logger.error
+      style: secondary
+      start: 46
+      end: 63
+    - source: self.logger.error("nope", e)
+      style: secondary
+      start: 46
+      end: 74
+  ? |
+    try:
+        do_work()
+    except ValueError:
+        logger.exception("oops")
+        raise
+  : labels:
+    - source: |-
+        except ValueError:
+            logger.exception("oops")
+            raise
+      style: primary
+      start: 19
+      end: 76
+    - source: raise
+      style: secondary
+      start: 71
+      end: 76
+    - source: exception
+      style: secondary
+      start: 49
+      end: 58
+    - source: logger.exception
+      style: secondary
+      start: 42
+      end: 58
+    - source: logger.exception("oops")
+      style: secondary
+      start: 42
+      end: 66

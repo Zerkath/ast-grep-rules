@@ -1,0 +1,31 @@
+id: recover-with-throw
+valid:
+  - |
+    val x = doStuff().recover { ex => 0 }
+  - |
+    val x = doStuff().recover {
+      case _: IOException => 0
+      case _              => -1
+    }
+  - |
+    val x = doStuff().recoverWith { case _: IOException => Future.successful(0) }
+  - |
+    val x = doStuff().map(_ + 1)
+invalid:
+  - |
+    val x = doStuff().recover { ex =>
+      log.error("Function failed", ex)
+      throw ex
+    }
+  - |
+    val x = doStuff().recoverWith { case ex: IOException =>
+      log.error("io fail", ex)
+      throw ex
+    }
+  - |
+    val x = doStuff().recover {
+      case ex: IOException =>
+        log.error("bad", ex)
+        throw ex
+      case _ => 0
+    }

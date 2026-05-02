@@ -1,0 +1,12 @@
+---
+id: try-with-throw
+language: scala
+severity: warning
+message: |
+  Throwing inside `Try { ... }` defeats its purpose - Try already captures exceptions.
+  Return the value or use `Failure(ex)` instead.
+rule:
+  pattern: Try { $$$BODY }
+  has:
+    kind: throw_expression
+    stopBy: end

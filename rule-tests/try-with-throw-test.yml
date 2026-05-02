@@ -1,0 +1,30 @@
+id: try-with-throw
+valid:
+  - |
+    val x = Try { 1 + 1 }
+  - |
+    val x = Try { UUID.fromString(s) }
+  - |
+    val x = Try {
+      str match {
+        case Some(v) => UUID.fromString(v)
+        case None    => UUID.randomUUID()
+      }
+    }
+  - |
+    def fine(s: String): Try[Int] = Try(s.toInt)
+invalid:
+  - |
+    val x = Try {
+      if (cond) throw new RuntimeException("nope")
+      else 42
+    }
+  - |
+    val x = Try {
+      str match {
+        case None    => throw new Exception("missing")
+        case Some(v) => v
+      }
+    }
+  - |
+    val x = Try { throw new IllegalStateException("boom") }

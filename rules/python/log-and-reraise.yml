@@ -1,0 +1,23 @@
+---
+id: log-and-reraise
+language: python
+severity: warning
+message: >
+  Logging then re-raising adds no information — the edge handler will log the exception anyway, 
+  so this produces duplicate log entries that complicate triage.
+  Either let the exception propagate (drop the try/except), or handle it locally (don't re-raise).
+rule:
+  kind: except_clause
+  all:
+    - has:
+        stopBy: end
+        pattern: raise
+    - has:
+        stopBy: end
+        kind: call
+        has:
+          field: function
+          kind: attribute
+          has:
+            field: attribute
+            regex: ^(debug|info|warning|warn|error|exception|critical|fatal|log)$

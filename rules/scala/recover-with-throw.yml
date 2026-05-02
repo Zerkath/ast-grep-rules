@@ -1,0 +1,18 @@
+---
+id: recover-with-throw
+language: scala
+severity: warning
+message: |
+  Throwing inside `.recover`/`.recoverWith` rethrows synchronously and breaks the Future contract,
+  return `Future.failed(ex)` (or just don't recover) instead.
+rule:
+  kind: call_expression
+  all:
+    - has:
+        kind: field_expression
+        has:
+          field: field # the named field "field" inside field_expression
+          regex: ^recover(With)?$
+    - has:
+        kind: throw_expression
+        stopBy: end

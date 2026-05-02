@@ -1,0 +1,37 @@
+id: log-and-reraise
+valid:
+  - |
+    try:
+        do_work()
+    except Exception as e:
+        log.error("oops", e)
+        return None
+  - |
+    try:
+        do_work()
+    finally:
+        cleanup()
+  - |
+    try:
+        do_work()
+    except Exception:
+        raise CustomError("wrapped")
+invalid:
+  - |
+    try:
+        do_work()
+    except Exception as e:
+        log.error("work failed", e)
+        raise
+  - |
+    try:
+        do_work()
+    except ValueError:
+        logger.exception("oops")
+        raise
+  - |
+    try:
+        do_work()
+    except Exception as e:
+        self.logger.error("nope", e)
+        raise
