@@ -1,5 +1,18 @@
-id: print-stack-trace
+id: print-stack-trace-java
 snapshots:
+  ? |
+    public void handleException(Exception e) {
+        e.printStackTrace();
+    }
+  : labels:
+    - source: e.printStackTrace()
+      style: primary
+      start: 47
+      end: 66
+    - source: printStackTrace
+      style: secondary
+      start: 49
+      end: 64
   ? |
     try {
         doSomething();
@@ -9,8 +22,12 @@ snapshots:
   : labels:
     - source: e.printStackTrace()
       style: primary
-      start: 60
-      end: 78
+      start: 53
+      end: 72
+    - source: printStackTrace
+      style: secondary
+      start: 55
+      end: 70
   ? |
     try {
         doSomething();
@@ -20,14 +37,9 @@ snapshots:
   : labels:
     - source: e.printStackTrace(System.err)
       style: primary
-      start: 57
+      start: 55
       end: 84
-  ? |
-    public void handleException(Exception e) {
-        e.printStackTrace();
-    }
-  : labels:
-    - source: e.printStackTrace()
-      style: primary
-      start: 47
-      end: 65
+    - source: printStackTrace
+      style: secondary
+      start: 57
+      end: 72

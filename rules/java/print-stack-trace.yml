@@ -1,5 +1,5 @@
 ---
-id: print-stack-trace
+id: print-stack-trace-java
 language: java
 severity: warning
 message: >
@@ -8,8 +8,6 @@ message: >
   to record the exception through the normal logging pipeline.
 rule:
   kind: method_invocation
-  all:
-    - has:
-        kind: identifier
-        regex: ^printStackTrace$
-    - pattern: $_.$$$
+  has:
+    field: name
+    regex: ^printStackTrace$

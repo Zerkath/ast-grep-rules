@@ -1,4 +1,4 @@
-id: print-stack-trace
+id: print-stack-trace-scala
 language: scala
 valid:
   - |
