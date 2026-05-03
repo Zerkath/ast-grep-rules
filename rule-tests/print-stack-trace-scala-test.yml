@@ -1,0 +1,36 @@
+id: print-stack-trace
+language: scala
+valid:
+  - |
+    try {
+      doSomething()
+    } catch {
+      case e: Exception => logger.error("An error occurred", e)
+    }
+  - |
+    Future {
+      doSomething()
+    }.recover {
+      case e: Exception => logger.error("Recovery error", e)
+    }
+  - |
+    def handleException(e: Exception): Unit = {
+      log.error(s"Error: ${e.getMessage}", e)
+    }
+invalid:
+  - |
+    try {
+      doSomething()
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+  - |
+    Future {
+      doSomething()
+    }.recover {
+      case e: Exception => e.printStackTrace()
+    }
+  - |
+    def handleException(e: Exception): Unit = {
+      e.printStackTrace()
+    }

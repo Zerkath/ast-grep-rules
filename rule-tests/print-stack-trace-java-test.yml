@@ -1,0 +1,36 @@
+id: print-stack-trace
+language: java
+valid:
+  - |
+    try {
+        doSomething();
+    } catch (Exception e) {
+        logger.error("An error occurred", e);
+    }
+  - |
+    try {
+        doSomething();
+    } catch (IOException e) {
+        logger.warn("IO warning", e);
+    }
+  - |
+    public void handleException(Exception e) {
+        log.error("Error details: " + e.getMessage());
+    }
+invalid:
+  - |
+    try {
+        doSomething();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+  - |
+    try {
+        doSomething();
+    } catch (IOException e) {
+        e.printStackTrace(System.err);
+    }
+  - |
+    public void handleException(Exception e) {
+        e.printStackTrace();
+    }

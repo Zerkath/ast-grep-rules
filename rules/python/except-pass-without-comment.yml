@@ -1,0 +1,27 @@
+---
+id: except-pass-without-comment
+language: python
+severity: warning
+message: >
+  Silently swallowing an exception with `pass` and no explanation hides bugs:
+  the next reader cannot tell whether this is intentional (known-noisy library,
+  best-effort cleanup) or an oversight. Add a comment naming the exception you
+  expect and *why* it's safe to ignore — or handle/log it.
+rule:
+  kind: except_clause
+  all:
+    - has:
+        kind: block
+        all:
+          - has:
+              kind: pass_statement
+          - not:
+              has:
+                kind: expression_statement
+          - not:
+              has:
+                kind: call
+    - not:
+        has:
+          stopBy: end
+          kind: comment

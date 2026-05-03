@@ -1,0 +1,84 @@
+id: recover-with-throw
+snapshots:
+  ? |
+    val x = doStuff().recover {
+      case ex: IOException =>
+        log.error("bad", ex)
+        throw ex
+      case _ => 0
+    }
+  : labels:
+    - source: |-
+        doStuff().recover {
+          case ex: IOException =>
+            log.error("bad", ex)
+            throw ex
+          case _ => 0
+        }
+      style: primary
+      start: 8
+      end: 107
+    - source: recover
+      style: secondary
+      start: 18
+      end: 25
+    - source: doStuff().recover
+      style: secondary
+      start: 8
+      end: 25
+    - source: throw ex
+      style: secondary
+      start: 83
+      end: 91
+  ? |
+    val x = doStuff().recover { ex =>
+      log.error("Function failed", ex)
+      throw ex
+    }
+  : labels:
+    - source: |-
+        doStuff().recover { ex =>
+          log.error("Function failed", ex)
+          throw ex
+        }
+      style: primary
+      start: 8
+      end: 81
+    - source: recover
+      style: secondary
+      start: 18
+      end: 25
+    - source: doStuff().recover
+      style: secondary
+      start: 8
+      end: 25
+    - source: throw ex
+      style: secondary
+      start: 71
+      end: 79
+  ? |
+    val x = doStuff().recoverWith { case ex: IOException =>
+      log.error("io fail", ex)
+      throw ex
+    }
+  : labels:
+    - source: |-
+        doStuff().recoverWith { case ex: IOException =>
+          log.error("io fail", ex)
+          throw ex
+        }
+      style: primary
+      start: 8
+      end: 95
+    - source: recoverWith
+      style: secondary
+      start: 18
+      end: 29
+    - source: doStuff().recoverWith
+      style: secondary
+      start: 8
+      end: 29
+    - source: throw ex
+      style: secondary
+      start: 85
+      end: 93

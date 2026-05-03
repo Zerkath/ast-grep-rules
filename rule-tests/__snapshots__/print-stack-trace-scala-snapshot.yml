@@ -1,0 +1,33 @@
+id: print-stack-trace
+snapshots:
+  ? |
+    try {
+      doSomething()
+    } catch {
+      case e: Exception => e.printStackTrace()
+    }
+  : labels:
+    - source: e.printStackTrace()
+      style: primary
+      start: 59
+      end: 77
+  ? |
+    Future {
+      doSomething()
+    }.recover {
+      case e: Exception => e.printStackTrace()
+    }
+  : labels:
+    - source: e.printStackTrace()
+      style: primary
+      start: 71
+      end: 89
+  ? |
+    def handleException(e: Exception): Unit = {
+      e.printStackTrace()
+    }
+  : labels:
+    - source: e.printStackTrace()
+      style: primary
+      start: 50
+      end: 68

@@ -1,0 +1,29 @@
+id: import-inside-function
+valid:
+  - |
+    import json
+    from typing import List
+
+    def f():
+        return json.dumps([])
+  - |
+    if TYPE_CHECKING:
+        from foo import Bar
+invalid:
+  - |
+    def f():
+        import json
+        return json.dumps([])
+  - |
+    def f():
+        from typing import List
+        return List[int]
+  - |
+    async def g():
+        import heavy_module
+        return heavy_module.do()
+  - |
+    class C:
+        def m(self):
+            import os
+            return os.getcwd()

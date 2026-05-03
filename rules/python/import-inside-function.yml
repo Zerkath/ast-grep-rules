@@ -1,0 +1,21 @@
+---
+id: import-inside-function
+language: python
+severity: hint
+message: >
+  Imports inside function bodies usually signal one of: working around a circular
+  import, hiding an optional/heavy dependency, or accidental scoping. Each call
+  pays a small import-lock cost and the dependency is invisible to readers and
+  static tools scanning the module header.
+
+  Prefer a top-level import. Legitimate cases (true circular import, lazy load
+  of a heavy optional dep) are real but rare — when keeping the local import,
+  leave a comment explaining why.
+rule:
+  any:
+    - kind: import_statement
+    - kind: import_from_statement
+  inside:
+    stopBy: end
+    any:
+      - kind: function_definition

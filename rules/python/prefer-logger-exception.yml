@@ -1,0 +1,13 @@
+---
+id: prefer-logger-exception
+language: python
+severity: hint
+message: >
+  `traceback.print_exc()` writes the traceback to stderr without timestamps,
+  log levels, or correlation context, and bypasses the project's logging
+  configuration. Inside an `except` block, `logger.exception("...")` records
+  the same traceback at ERROR level through the normal log pipeline.
+rule:
+  any:
+    - pattern: traceback.print_exc()
+    - pattern: traceback.print_exc($$$)

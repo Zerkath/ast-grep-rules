@@ -1,0 +1,67 @@
+id: import-inside-function
+snapshots:
+  ? |
+    async def g():
+        import heavy_module
+        return heavy_module.do()
+  : labels:
+    - source: import heavy_module
+      style: primary
+      start: 19
+      end: 38
+    - source: |-
+        async def g():
+            import heavy_module
+            return heavy_module.do()
+      style: secondary
+      start: 0
+      end: 67
+  ? |
+    class C:
+        def m(self):
+            import os
+            return os.getcwd()
+  : labels:
+    - source: import os
+      style: primary
+      start: 34
+      end: 43
+    - source: |-
+        def m(self):
+                import os
+                return os.getcwd()
+      style: secondary
+      start: 13
+      end: 70
+  ? |
+    def f():
+        from typing import List
+        return List[int]
+  : labels:
+    - source: from typing import List
+      style: primary
+      start: 13
+      end: 36
+    - source: |-
+        def f():
+            from typing import List
+            return List[int]
+      style: secondary
+      start: 0
+      end: 57
+  ? |
+    def f():
+        import json
+        return json.dumps([])
+  : labels:
+    - source: import json
+      style: primary
+      start: 13
+      end: 24
+    - source: |-
+        def f():
+            import json
+            return json.dumps([])
+      style: secondary
+      start: 0
+      end: 50

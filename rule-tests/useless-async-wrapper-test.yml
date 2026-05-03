@@ -1,0 +1,26 @@
+id: useless-async-wrapper
+valid:
+  - |
+    async def fetch(self, uid):
+        row = await self._db.get(uid)
+        return User.from_row(row)
+  - |
+    async def fetch(self, uid):
+        try:
+            return await self._inner(uid)
+        except TimeoutError:
+            return None
+  - |
+    async def fetch(self, uid):
+        log.info("fetching %s", uid)
+        return await self._inner(uid)
+invalid:
+  - |
+    async def fetch(self, uid):
+        await self._inner(uid)
+  - |
+    async def fetch(self, uid):
+        return await self._inner(uid)
+  - |
+    async def get_user(uid):
+        return await db.fetch_user(uid)

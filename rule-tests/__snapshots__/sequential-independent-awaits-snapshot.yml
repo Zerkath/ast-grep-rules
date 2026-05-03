@@ -1,0 +1,69 @@
+id: sequential-independent-awaits
+snapshots:
+  ? |
+    async def f():
+        a = await load_a()
+        b = await load_b()
+        return a, b
+  : labels:
+    - source: b = await load_b()
+      style: primary
+      start: 42
+      end: 60
+    - source: b = await load_b()
+      style: secondary
+      start: 42
+      end: 60
+    - source: a = await load_a()
+      style: secondary
+      start: 19
+      end: 37
+    - source: a = await load_a()
+      style: secondary
+      start: 19
+      end: 37
+  ? |
+    async def f():
+        a = await load_a()
+        c = "const"
+        print(c)
+        b = await load_b()
+        return a, b
+  : labels:
+    - source: b = await load_b()
+      style: primary
+      start: 71
+      end: 89
+    - source: b = await load_b()
+      style: secondary
+      start: 71
+      end: 89
+    - source: a = await load_a()
+      style: secondary
+      start: 19
+      end: 37
+    - source: a = await load_a()
+      style: secondary
+      start: 19
+      end: 37
+  ? |
+    async def f():
+        user = await fetch_user(uid)
+        prefs = await fetch_prefs(uid)
+  : labels:
+    - source: prefs = await fetch_prefs(uid)
+      style: primary
+      start: 52
+      end: 82
+    - source: prefs = await fetch_prefs(uid)
+      style: secondary
+      start: 52
+      end: 82
+    - source: user = await fetch_user(uid)
+      style: secondary
+      start: 19
+      end: 47
+    - source: user = await fetch_user(uid)
+      style: secondary
+      start: 19
+      end: 47

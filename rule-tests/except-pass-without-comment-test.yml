@@ -1,0 +1,34 @@
+id: except-pass-without-comment
+valid:
+  - |
+    try:
+        do()
+    except KeyError:
+        # key absence is expected during warmup
+        pass
+  - |
+    try:
+        do()
+    except Exception as e:
+        log.warning("ignored", exc_info=e)
+  - |
+    try:
+        do()
+    except Exception:
+        return None
+invalid:
+  - |
+    try:
+        do()
+    except Exception:
+        pass
+  - |
+    try:
+        do()
+    except ValueError:
+        pass
+  - |
+    try:
+        do()
+    except Exception as e:
+        pass

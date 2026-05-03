@@ -1,0 +1,21 @@
+---
+id: await-in-for-loop
+language: python
+severity: hint
+message: >
+  An `await` inside a `for` loop body is a classic N+1 pattern: each iteration
+  pays the full round-trip latency, so total time grows linearly with the
+  collection. Prefer a single batched call (e.g. `WHERE id IN (...)`,
+  bulk endpoint) or fan-out concurrently with `asyncio.gather(*[op(x) for x in xs])`
+  / `asyncio.TaskGroup`.
+
+  Heuristic: only the loop structure is inspected. Awaits that genuinely depend
+  on the previous iteration's result (sequential pagination, rate-limited APIs,
+  ordered side effects) need to stay sequential - review before refactoring.
+rule:
+  kind: for_statement
+  has:
+    field: body
+    has:
+      stopBy: end
+      kind: await

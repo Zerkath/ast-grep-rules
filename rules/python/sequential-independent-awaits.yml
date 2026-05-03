@@ -1,0 +1,26 @@
+---
+id: sequential-independent-awaits
+language: python
+severity: hint
+message: >
+  Two awaits run back-to-back where the second does not reference the first's bound name.
+  Their latencies add up unnecessarily — consider running them concurrently with
+  `asyncio.gather(...)` (or `asyncio.TaskGroup` on 3.11+) so they overlap.
+
+  This is a heuristic: it only inspects the immediately preceding statement and only
+  checks name references, so side-effect ordering or shared mutable state may still
+  require sequencing. Review before refactoring.
+rule:
+  all:
+    - kind: expression_statement
+      has:
+        pattern: $Y = await $G($$$ARGS)
+    - follows:
+        stopBy: end
+        kind: expression_statement
+        has:
+          pattern: $X = await $F($$$FARGS)
+    - not:
+        has:
+          stopBy: end
+          pattern: $X

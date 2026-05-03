@@ -1,0 +1,30 @@
+id: sequential-independent-awaits
+valid:
+  - |
+    async def f():
+        user = await fetch_user(uid)
+        orders = await fetch_orders(user.id)
+  - |
+    async def f():
+        a = await one()
+        b = await two(a)
+  - |
+    async def f():
+        a = await one()
+invalid:
+  - |
+    async def f():
+        user = await fetch_user(uid)
+        prefs = await fetch_prefs(uid)
+  - |
+    async def f():
+        a = await load_a()
+        b = await load_b()
+        return a, b
+  - |
+    async def f():
+        a = await load_a()
+        c = "const"
+        print(c)
+        b = await load_b()
+        return a, b

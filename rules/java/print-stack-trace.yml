@@ -1,0 +1,15 @@
+---
+id: print-stack-trace
+language: java
+severity: warning
+message: >
+  `.printStackTrace()` writes to stderr without log levels, timestamps, or correlation context.
+  Use a logger instead: `logger.error("...", exception)` or `logger.warn("...", exception)`
+  to record the exception through the normal logging pipeline.
+rule:
+  kind: method_invocation
+  all:
+    - has:
+        kind: identifier
+        regex: ^printStackTrace$
+    - pattern: $_.$$$

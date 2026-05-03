@@ -1,0 +1,30 @@
+id: await-in-for-loop
+valid:
+  - |
+    async def f(users):
+        ids = [u.id for u in users]
+        rows = await db.fetch_many(ids)
+  - |
+    async def f(users):
+        for u in users:
+            log.info(u.name)
+  - |
+    async def f(items):
+        async for x in stream(items):
+            handle(x)
+invalid:
+  - |
+    async def f(users):
+        for u in users:
+            await db.fetch_orders(u.id)
+  - |
+    async def f():
+        users = await db.fetch_users()
+        for u in users:
+            u.profile = await db.fetch_profile(u.id)
+  - |
+    async def f(items):
+        results = []
+        for i in items:
+            if i.active:
+                results.append(await process(i))

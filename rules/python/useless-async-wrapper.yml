@@ -1,0 +1,21 @@
+---
+id: useless-async-wrapper
+language: python
+severity: hint
+message: >
+  This async function only forwards its arguments to another awaitable and
+  returns the result. The wrapper adds an extra coroutine frame on every call
+  while contributing no logic, error handling, or transformation — callers
+  could await the inner coroutine directly.
+
+  Keep the wrapper if it documents an interface boundary, narrows a return
+  type, or is reserved as an extension point; otherwise inline it.
+rule:
+  kind: function_definition
+  any:
+    - pattern: |
+        async def $NAME($$$ARGS):
+            await $CALL
+    - pattern: |
+        async def $NAME($$$ARGS):
+            return await $CALL

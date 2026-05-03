@@ -1,0 +1,32 @@
+id: useless-async-wrapper
+snapshots:
+  ? |
+    async def fetch(self, uid):
+        await self._inner(uid)
+  : labels:
+    - source: |-
+        async def fetch(self, uid):
+            await self._inner(uid)
+      style: primary
+      start: 0
+      end: 54
+  ? |
+    async def fetch(self, uid):
+        return await self._inner(uid)
+  : labels:
+    - source: |-
+        async def fetch(self, uid):
+            return await self._inner(uid)
+      style: primary
+      start: 0
+      end: 61
+  ? |
+    async def get_user(uid):
+        return await db.fetch_user(uid)
+  : labels:
+    - source: |-
+        async def get_user(uid):
+            return await db.fetch_user(uid)
+      style: primary
+      start: 0
+      end: 60

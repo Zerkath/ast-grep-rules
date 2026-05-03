@@ -1,0 +1,62 @@
+id: except-pass-without-comment
+snapshots:
+  ? |
+    try:
+        do()
+    except Exception as e:
+        pass
+  : labels:
+    - source: |-
+        except Exception as e:
+            pass
+      style: primary
+      start: 14
+      end: 45
+    - source: pass
+      style: secondary
+      start: 41
+      end: 45
+    - source: pass
+      style: secondary
+      start: 41
+      end: 45
+  ? |
+    try:
+        do()
+    except Exception:
+        pass
+  : labels:
+    - source: |-
+        except Exception:
+            pass
+      style: primary
+      start: 14
+      end: 40
+    - source: pass
+      style: secondary
+      start: 36
+      end: 40
+    - source: pass
+      style: secondary
+      start: 36
+      end: 40
+  ? |
+    try:
+        do()
+    except ValueError:
+        pass
+  : labels:
+    - source: |-
+        except ValueError:
+            pass
+      style: primary
+      start: 14
+      end: 41
+    - source: pass
+      style: secondary
+      start: 37
+      end: 41
+    - source: pass
+      style: secondary
+      start: 37
+      end: 41

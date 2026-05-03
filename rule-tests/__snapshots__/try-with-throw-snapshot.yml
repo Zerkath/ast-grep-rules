@@ -1,0 +1,53 @@
+id: try-with-throw
+snapshots:
+  ? |
+    val x = Try {
+      if (cond) throw new RuntimeException("nope")
+      else 42
+    }
+  : labels:
+    - source: |-
+        Try {
+          if (cond) throw new RuntimeException("nope")
+          else 42
+        }
+      style: primary
+      start: 8
+      end: 72
+    - source: throw new RuntimeException("nope")
+      style: secondary
+      start: 26
+      end: 60
+  ? |
+    val x = Try {
+      str match {
+        case None    => throw new Exception("missing")
+        case Some(v) => v
+      }
+    }
+  : labels:
+    - source: |-
+        Try {
+          str match {
+            case None    => throw new Exception("missing")
+            case Some(v) => v
+          }
+        }
+      style: primary
+      start: 8
+      end: 106
+    - source: throw new Exception("missing")
+      style: secondary
+      start: 48
+      end: 78
+  ? |
+    val x = Try { throw new IllegalStateException("boom") }
+  : labels:
+    - source: Try { throw new IllegalStateException("boom") }
+      style: primary
+      start: 8
+      end: 55
+    - source: throw new IllegalStateException("boom")
+      style: secondary
+      start: 14
+      end: 53

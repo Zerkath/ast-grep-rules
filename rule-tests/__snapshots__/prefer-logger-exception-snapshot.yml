@@ -1,0 +1,22 @@
+id: prefer-logger-exception
+snapshots:
+  ? |
+    try:
+        do()
+    except Exception:
+        traceback.print_exc()
+  : labels:
+    - source: traceback.print_exc()
+      style: primary
+      start: 36
+      end: 57
+  ? |
+    try:
+        do()
+    except Exception:
+        traceback.print_exc(file=sys.stderr)
+  : labels:
+    - source: traceback.print_exc(file=sys.stderr)
+      style: primary
+      start: 36
+      end: 72

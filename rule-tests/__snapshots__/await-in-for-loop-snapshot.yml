@@ -1,0 +1,63 @@
+id: await-in-for-loop
+snapshots:
+  ? |
+    async def f():
+        users = await db.fetch_users()
+        for u in users:
+            u.profile = await db.fetch_profile(u.id)
+  : labels:
+    - source: |-
+        for u in users:
+                u.profile = await db.fetch_profile(u.id)
+      style: primary
+      start: 54
+      end: 118
+    - source: await db.fetch_profile(u.id)
+      style: secondary
+      start: 90
+      end: 118
+    - source: await db.fetch_profile(u.id)
+      style: secondary
+      start: 90
+      end: 118
+  ? |
+    async def f(items):
+        results = []
+        for i in items:
+            if i.active:
+                results.append(await process(i))
+  : labels:
+    - source: |-
+        for i in items:
+                if i.active:
+                    results.append(await process(i))
+      style: primary
+      start: 41
+      end: 122
+    - source: await process(i)
+      style: secondary
+      start: 105
+      end: 121
+    - source: await process(i)
+      style: secondary
+      start: 105
+      end: 121
+  ? |
+    async def f(users):
+        for u in users:
+            await db.fetch_orders(u.id)
+  : labels:
+    - source: |-
+        for u in users:
+                await db.fetch_orders(u.id)
+      style: primary
+      start: 24
+      end: 75
+    - source: await db.fetch_orders(u.id)
+      style: secondary
+      start: 48
+      end: 75
+    - source: await db.fetch_orders(u.id)
+      style: secondary
+      start: 48
+      end: 75

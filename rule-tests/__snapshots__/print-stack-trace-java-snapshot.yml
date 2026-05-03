@@ -1,0 +1,33 @@
+id: print-stack-trace
+snapshots:
+  ? |
+    try {
+        doSomething();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+  : labels:
+    - source: e.printStackTrace()
+      style: primary
+      start: 60
+      end: 78
+  ? |
+    try {
+        doSomething();
+    } catch (IOException e) {
+        e.printStackTrace(System.err);
+    }
+  : labels:
+    - source: e.printStackTrace(System.err)
+      style: primary
+      start: 57
+      end: 84
+  ? |
+    public void handleException(Exception e) {
+        e.printStackTrace();
+    }
+  : labels:
+    - source: e.printStackTrace()
+      style: primary
+      start: 47
+      end: 65
