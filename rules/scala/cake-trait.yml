@@ -1,0 +1,24 @@
+id: cake-trait
+language: scala
+severity: warning
+message: >
+  $T declares abstract `$M` and consumes it in its own concrete method,
+  a constructor spelled as inheritance.
+  Make it `class $T($M: ...)` and pass the instance to each class that mixes it in.
+rule:
+  kind: trait_definition
+  all:
+    - has: { field: name, pattern: $T }
+    - has:
+        stopBy: end
+        any: [{kind: function_declaration}, {kind: val_declaration}]
+        not: { regex: "\\bimplicit\\b" }
+        has: { field: name, pattern: $M }
+    - has:
+        stopBy: end
+        any: [{kind: function_definition}, {kind: val_definition}]
+        has:
+          stopBy: end
+          kind: identifier
+          pattern: $M
+          not: { inside: { kind: parameter, stopBy: end } }

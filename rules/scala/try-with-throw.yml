@@ -2,7 +2,7 @@
 id: try-with-throw
 language: scala
 severity: warning
-message: |
+message: >
   Throwing inside `Try { ... }` defeats its purpose - Try already captures exceptions.
   Return the value or use `Failure(ex)` instead.
 rule:

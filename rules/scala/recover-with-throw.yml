@@ -2,7 +2,7 @@
 id: recover-with-throw
 language: scala
 severity: warning
-message: |
+message: >
   Throwing inside `.recover`/`.recoverWith` rethrows synchronously and breaks the Future contract,
   return `Future.failed(ex)` (or just don't recover) instead.
 rule:

@@ -1,0 +1,19 @@
+id: cake-trait-implicit
+language: scala
+severity: warning
+message: >
+  $T requires an implicit `$M` from whoever mixes it in, 
+  and has concrete methods that use it — a constructor spelled as inheritance.
+  Make it `class $T(...)(implicit $M: ...)`."
+rule:
+  kind: trait_definition
+  all:
+    - has: { field: name, pattern: $T }
+    - has:
+        stopBy: end
+        any: [{kind: function_declaration}, {kind: val_declaration}]
+        regex: "\\bimplicit\\b"
+        has: { field: name, pattern: $M }
+    - has:
+        stopBy: end
+        any: [{kind: function_definition}, {kind: val_definition}]
